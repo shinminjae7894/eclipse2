@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script>
+		function nullCheck(){
+			let kor = document.getElementsByName("kor")[0].value;
+			let eng = document.getElementsByName("eng")[0].value;
+			let mat = document.getElementsByName("mat")[0].value;
+			
+			console.log(kor,eng,mat);
+			//같은이름이 여러개 있을 수 있으므로 배열로 접근
+			
+			if(kor === "" || eng === "" || mat === "" ){
+				alert("빈칸을 채워주세요");
+				return false;
+			}
+			return true;
+		}
+	</script>
+</head>
+<body>
+	<h1>성적 처리 프로그램</h1>
+	<form action="/ServletTest/sungjuk" method="GET" onSubmit="return nullCheck()">
+		국어 : <input type="text" name="kor" /><br><br>
+		영어 : <input type="text" name="eng" /><br><br>
+		수학 : <input type="text" name="mat" /><br><br>
+		<input type="radio" name="calc" value="tot" checked="checked">총점 &nbsp;&nbsp;&nbsp;
+		<input type="radio" name="calc" value="avg">평균<br><br>
+		<input type="submit" value="전송" />
+		<!-- onSubmit : form태그에서만 씀 ,버튼에서 x,true랑 false만 받을 수 있음-->
+	</form>
+</body>
+</html> 

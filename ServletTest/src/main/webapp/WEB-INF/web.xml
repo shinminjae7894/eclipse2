@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>ServletTest</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>
+  <!-- TestServlet test1 = new Test1Servlet() -->
+  	<servlet-name>test1</servlet-name>
+  	<servlet-class>Test1Servlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>test1</servlet-name>
+  	<url-pattern>/test1</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>test2</servlet-name>
+  	<servlet-class>SungjukServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>test2</servlet-name>
+  	<url-pattern>/sungjuk</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>test3</servlet-name>
+  	<servlet-class>Test3Servlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>test3</servlet-name>
+  	<url-pattern>/paramValues</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>test4</servlet-name>
+  	<servlet-class>LifeCycleTest</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>test4</servlet-name>
+  	<url-pattern>/test4</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>test5</servlet-name>
+  	<servlet-class>RequestHeaderinfo</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>test5</servlet-name>
+  	<url-pattern>/test5</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>test6</servlet-name>
+  	<servlet-class>Test4</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>test6</servlet-name>
+  	<url-pattern>/test6</url-pattern>
+  </servlet-mapping>
+</web-app>
