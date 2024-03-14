@@ -168,7 +168,7 @@
 		<!--http://localhost:8080/web3/index.html-->
 		
 
-      <Context docBase="ServletTest" path="/ServletTest" reloadable="true" source="org.eclipse.jst.jee.server:ServletTest"/><Context docBase="ServletTest2" path="/ServletTest2" reloadable="true" source="org.eclipse.jst.jee.server:ServletTest2"/><Context docBase="implicitObjectTest" path="/implicitObjectTest" reloadable="true" source="org.eclipse.jst.jee.server:implicitObjectTest"/><Context docBase="ActionTagTest" path="/ActionTagTest" reloadable="true" source="org.eclipse.jst.jee.server:ActionTagTest"/><Context docBase="BeanTagTest" path="/BeanTagTest" reloadable="true" source="org.eclipse.jst.jee.server:BeanTagTest"/></Host>
+      <Context docBase="BeanTagTest" path="/BeanTagTest" reloadable="true" source="org.eclipse.jst.jee.server:BeanTagTest"/><Context docBase="DBTest" path="/DBTest" reloadable="true" source="org.eclipse.jst.jee.server:DBTest"/></Host>
     </Engine>
   </Service>
 </Server>
