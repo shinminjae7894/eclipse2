@@ -1,22 +1,19 @@
 <%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
 <%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html; charset=utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>updateEmp_proc.jsp</title>
+<title>deleteEmp.jsp</title>
 </head>
 <body>
 	<%
-		// html에서 전달한 데이터 받아오기
 		request.setCharacterEncoding("utf-8");
 	
-		String name = request.getParameter("e_name");
-		String pass = request.getParameter("e_pass");
-		String address = request.getParameter("e_address");
 		String no = request.getParameter("e_no");
+		//사번만 넘어 오므로 사번만 받아주면 됨
 		
 		
 		Connection conn = null;
@@ -28,22 +25,19 @@
 			String url = "jdbc:oracle:thin:@localhost:1521:xe";
 			conn = DriverManager.getConnection(url,"scott","1111");
 			
-			String sql = "update tblEmp set e_name=?, e_pass=?, e_address=? where e_no=?"; 
+			String sql = "delete from tblEmp where e_no=?"; 
 				
 					
 			
 			
 			stmt = conn.prepareStatement(sql);
 			
-			stmt.setString(1,name);
-			stmt.setString(2,pass);
-			stmt.setString(3,address);
-			stmt.setString(4,no);
+			stmt.setString(1,no);
 			
 			stmt.executeUpdate();
 		%>
 			<script>
-				alert("잘 수정되었습니다.");
+				alert("잘 삭제되었습니다.");
 			</script>
 
 			<ul>

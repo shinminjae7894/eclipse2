@@ -46,7 +46,8 @@
 	</table>
 <body>
 	<h1>직원 수정</h1>
-	<form action="updateEmp_proc.jsp" method="post">
+	<form action="updateEmp_proc.jsp" method="post"><!--?e_no=<%=e_no%> : e_no를 넘겨줘야함 -->
+		<input type="hidden" name="e_no" value="<%=e_no %>"/><!-- hidden으로 넘겨주는 방법 -->
 		<table border="1">
 			<tr>
 				<th>아이디</th>
