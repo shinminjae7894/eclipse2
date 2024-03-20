@@ -1,4 +1,14 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
+
+<%@page import="mybean.board.BoardDto"%>
+<%@ page contentType="text/html; charset=utf-8"%>
+
+<jsp:useBean id="dto" class="mybean.board.BoardDto" />
+
+<%request.setCharacterEncoding("utf-8"); %>
+
+<jsp:setProperty property="*" name="dto" />
+
+<jsp:useBean id="dao" class="mybean.board.BoardDao" />
 
 <html>
 <head><title>JSPBoard</title>
@@ -6,7 +16,7 @@
 <script>
 	function check() {
 		if (document.form.pass.value == "") {
-		alert("ÆĞ½º¿öµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
+		alert("íŒ¨ìŠ¤ì›Œë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
 		form.pass.focus();
 		return false;
 		}
@@ -20,7 +30,7 @@
 <table width=50% cellspacing=0 cellpadding=3>
  <tr>
   <td bgcolor=#dddddd height=21 align=center>
-      »ç¿ëÀÚÀÇ ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.</td>
+      ì‚¬ìš©ìì˜ ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”.</td>
  </tr>
 </table>
 <table width=70% cellspacing=0 cellpadding=2>
@@ -38,9 +48,9 @@
     </tr>
     <tr>
      <td align=center>
-	  <input type=button value="»èÁ¦¿Ï·á" onClick="check()"> 
-      <input type=reset value="´Ù½Ã¾²±â"> 
-      <input type=button value="µÚ·Î" onClick="history.back()">
+	  <input type=button value="ì‚­ì œì™„ë£Œ" onClick="check()"> 
+      <input type=reset value="ë‹¤ì‹œì“°ê¸°"> 
+      <input type=button value="ë’¤ë¡œ" onClick="history.back()">
 	 </td>
     </tr> 
    </table>
