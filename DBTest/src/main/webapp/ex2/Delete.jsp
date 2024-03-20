@@ -1,29 +1,45 @@
-
 <%@page import="mybean.board.BoardDto"%>
-<%@ page contentType="text/html; charset=utf-8"%>
-
-<jsp:useBean id="dto" class="mybean.board.BoardDto" />
-
-<%request.setCharacterEncoding("utf-8"); %>
-
-<jsp:setProperty property="*" name="dto" />
-
-<jsp:useBean id="dao" class="mybean.board.BoardDao" />
+<%@ page contentType="text/html; charset=utf-8" %>
 
 <html>
 <head><title>JSPBoard</title>
 <link href="style.css" rel="stylesheet" type="text/css">
 <script>
 	function check() {
-		if (document.form.pass.value == "") {
+		if (document.form.b_pass.value == "") {
 		alert("패스워드를 입력하세요.");
-		form.pass.focus();
+		form.b_pass.focus();
 		return false;
 		}
 		document.form.submit();
 	}
 </script>
 </head>
+
+<jsp:useBean id="dao" class="mybean.board.BoardDao" />
+<%
+	String b_pass = request.getParameter("b_pass");
+	String b_num = request.getParameter("b_num");
+	
+	if(b_pass != null) {
+		int num = Integer.parseInt(b_num);
+		BoardDto original =  dao.getBoard(num);
+		
+		if(b_pass.equals(original.getB_pass())){
+			dao.deleteBoard(num);
+			response.sendRedirect("List.jsp");
+		}
+		else{
+%>
+		<script>
+			alert("비밀번호가 틀렸습니다.");
+			history.back();
+		</script>
+<%	
+		}
+	}
+%>
+
 <body>
 <center>
 <br><br>
@@ -35,12 +51,13 @@
 </table>
 <table width=70% cellspacing=0 cellpadding=2>
 <form name=form method=post action="Delete.jsp" >
+<input type="hidden" name="b_num" value="<%=b_num%>"/>
  <tr>
   <td align=center>
    <table align=center border=0 width=91%>
     <tr> 
      <td align=center>  
-	  <input type=password name="pass" size=17 maxlength=15>
+	  <input type=password name="b_pass" size=17 maxlength=15>
 	 </td> 
     </tr>
     <tr>
