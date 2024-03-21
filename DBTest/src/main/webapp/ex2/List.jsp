@@ -4,9 +4,13 @@
 
 <%
 	int totalRecord = 0; // 총 글의 갯수
-	int numPerpage = 5; //한 페이지당 보여질 글의 갯수
+	int numPerPage = 5; //한 페이지당 보여질 글의 갯수
 	int totalPage = 0; //총 페이지 수
 	int nowPage = 0; //현재 페이지 번호
+	int beginPerPage = 0; //페이지별 시작 번호
+	int pagePerBlock = 3; //한 블럭 당 페이지 수
+	int totalBlock = 0; //총 블럭 수
+	int nowBlock = 0; // 현재 블럭
 %>
 
 <HTML>
@@ -27,7 +31,23 @@
 	request.setCharacterEncoding("utf-8");
 	String keyword = request.getParameter("keyword");
 	String search = request.getParameter("searchText");
+	
 	ArrayList<BoardDto> list = (ArrayList) dao.getBoardList(keyword, search);
+	
+	totalRecord = list.size();
+	totalPage = (int)Math.ceil((double)totalRecord / numPerPage) ;//ceil:올림, double형 써줘야함
+	
+	if(request.getParameter("nowPage")!= null){
+		nowPage = Integer.parseInt(request.getParameter("nowPage"));//정수형으로 캐스팅,클릭시 실행되므로 처음값 : null값
+	}
+	
+	beginPerPage = nowPage * numPerPage;
+	
+	if(request.getParameter("nowBlock")!= null){
+		nowBlock = Integer.parseInt(request.getParameter("nowBlock"));
+	}
+	
+	totalBlock = (int)Math.ceil((double)totalPage / pagePerBlock);
 	%>
 
 	<center>
@@ -36,8 +56,8 @@
 
 		<table align=center border=0 width=80%>
 			<tr>
-				<td align=left>Total :<%=list.size()%> Articles( <font
-					color=red> 1 / 10 Pages </font>)
+				<td align=left>Total :<%=totalRecord%> Articles( <font
+					color=red> <%=nowPage+1%> / <%=totalPage%> Pages </font>)
 				</td>
 			</tr>
 		</table>
@@ -56,31 +76,34 @@
 						</td>
 
 						<%
-						try {
+							try{
 							if (list != null) {
-								for (BoardDto b : list) {
+								for (int i=beginPerPage; i<beginPerPage + numPerPage; i++) {
+									if(i == totalRecord){
+										break;
+									}
+				
+									BoardDto dto = (BoardDto)list.get(i);
 						%>
-						<tr align=center bgcolor=white height=120%>
-							<td><%=b.getB_num()%></td>
-							<td><a href="Read.jsp?b_num=<%=b.getB_num()%>"><%=b.getB_subject()%></a></td>
-							<td><%=b.getB_name()%></td>
-							<td><%=b.getB_regdate()%></td>
-							<td><%=b.getB_count()%></td>
+						
+							<td><%=dto.getB_num()%></td>
+							<td><a href="Read.jsp?b_num=<%=dto.getB_num()%>"><%=dto.getB_subject()%></a></td>
+							<td><%=dto.getB_name()%></td>
+							<td><%=dto.getB_regdate()%></td>
+							<td><%=dto.getB_count()%></td>
 
 						</tr>
 
 						<%
-						}
+							}
 						} else {
 						%>
 						<tr>
 							<td>데이터가 없습니다.</td>
 						</tr>
 						<%
+							}
 						}
-
-						}
-
 						catch (Exception err) {
 						err.printStackTrace();
 						}
@@ -93,7 +116,26 @@
 				<BR></td>
 			</tr>
 			<tr>
-				<td align="left">Go to Page</td>
+				<td align="left">Go to Page &nbsp;&nbsp;&nbsp;
+				<%if(nowBlock > 0){ %>
+					<a href="List.jsp?nowPage=<%=((nowBlock-1) * pagePerBlock)%>&nowBlock=<%=nowBlock-1%>">이전 <%=pagePerBlock%>개</a>
+				<%} %>
+				:::&nbsp;&nbsp;&nbsp;
+				<%
+					for(int i=0; i<pagePerBlock; i++){
+						if((nowBlock * pagePerBlock)+ i == totalPage){
+							break;
+						}
+				%>
+					<a href="List.jsp?nowPage=<%=(nowBlock * pagePerBlock) + i%>&nowBlock=<%=nowBlock%>"><%=(nowBlock * pagePerBlock)+ i+1%></a> &nbsp;&nbsp;&nbsp;
+				<%
+					}
+				%>
+				&nbsp;&nbsp;&nbsp; :::
+				<%if(totalBlock > nowBlock+1){ %>
+					<a href="List.jsp?nowPage=<%=((nowBlock+1) * pagePerBlock)%>&nowBlock=<%=nowBlock+1%>">다음 <%=pagePerBlock%>개</a>
+				<%} %>
+				</td>
 				<td align=right><a href="Post.jsp">[글쓰기]</a> <a
 					href="javascript:list()">[처음으로]</a></td>
 			</tr>

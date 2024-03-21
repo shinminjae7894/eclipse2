@@ -42,7 +42,7 @@
    </tr>
    <tr>
     <td colspan=4 align=right>
-     로 부터 글을 남기셨습니다./  조회수 : <%=dto.getB_count()%>
+     <%=dto.getB_ip() %>로 부터 글을 남기셨습니다./  조회수 : <%=dto.getB_count()%>
     </td>
    </tr>
    </table>
@@ -52,6 +52,7 @@
   <td align=center colspan=2> 
 	<hr size=1>
 	[ <a href="javascript:list()">목 록</a> | 
+	<a href="Reply.jsp?b_num=<%=b_num%>">답 변</a> |
 	<a href="Update.jsp?b_num=<%=b_num%>">수 정</a> |
 	<a href="Delete.jsp?b_num=<%=b_num%>">삭 제</a> ]<br>
   </td>

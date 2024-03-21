@@ -15,7 +15,7 @@ public class BoardDao {
 	private Connection conn;
 	private PreparedStatement stmt;
 	private ResultSet rs;
-	//private DataSource ds;
+	private DataSource ds;
 	private DBConnectionMgr pool;
 	
 	public BoardDao() {
@@ -41,12 +41,12 @@ public class BoardDao {
 		String sql = null; 
 		
 		if(searchText==null || searchText.isEmpty()) {
-			sql = "select * from tblboard order by b_num desc";
+			sql = "select * from tblboard order by pos desc";
 		}
 		else {
 			sql = "select * from tblboard where " + keyword + 
 					" like '%" + searchText +
-					"%' order by b_num desc";
+					"%' order by pos desc";
 		}
 	
 		ArrayList list = new ArrayList();
@@ -84,11 +84,19 @@ public class BoardDao {
 	
 	// PostProc.jsp
 	public void setBoard(BoardDto board) {
-		String sql = "insert into tblboard(b_num," +
-				"b_name, b_email, b_homepage, b_subject, b_content, " +
-				"b_pass, b_count, b_ip, b_regdate, pos, depth) " +
-				"values(seq_b_num.nextVal, ?,?,?,?,?,?, 0, ?, sysdate, 0, 0)";
-		try {			
+		String sql = null;
+		
+		try {	
+			sql = "update tblboard set pos = pos + 1";
+			
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			sql = "insert into tblboard(b_num," +
+					"b_name, b_email, b_homepage, b_subject, b_content, " +
+					"b_pass, b_count, b_ip, b_regdate, pos, depth) " +
+					"values(seq_b_num.nextVal, ?,?,?,?,?,?, 0, ?, sysdate, 0, 0)";
+			
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, board.getB_name());
 			stmt.setString(2, board.getB_email());
@@ -103,12 +111,12 @@ public class BoardDao {
 			System.out.println("setBoard : " + e);
 		}
 		finally {
-			freeConn();
+			//freeConn();
 			pool.freeConnection(conn, stmt);
 		}
 	}
 	
-	// Read.jsp, Update.jsp
+	// Read.jsp, Update.jsp, reply.jsp
 	public BoardDto getBoard(int b_num) {
 		String sql;
 		BoardDto result = new BoardDto();
@@ -186,6 +194,40 @@ public class BoardDao {
 		finally{ 
 			//freeConn();
 			pool.freeConnection(conn, stmt);
+		}
+	}
+	
+	//ReplyProc.jsp
+	public void replyBoard(BoardDto dto) {
+		String sql = null;
+		try {
+			sql = "update tblboard set pos = pos + 1 where pos > ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, dto.getPos());
+			rs = stmt.executeQuery();
+			
+			sql = "insert into tblboard(b_num," +
+					"b_name, b_email, b_homepage, b_subject, b_content, " +
+					"b_pass, b_count, b_ip, b_regdate, pos, depth) " +
+					"values(seq_b_num.nextVal, ?,?,?,?,?,?, 0, ?, sysdate, ?, ?)";
+			
+			//conn = ds.getConnection();
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, dto.getB_name());
+			stmt.setString(2, dto.getB_email());
+			stmt.setString(3, dto.getB_homepage());
+			stmt.setString(4, dto.getB_subject());
+			stmt.setString(5, dto.getB_content());
+			stmt.setString(6, dto.getB_pass());
+			stmt.setString(7, dto.getB_ip());
+			stmt.setInt(8, dto.getPos() + 1);
+			stmt.setInt(9, dto.getDepth() + 1);
+			stmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("tblBoard : " + e);
+		} finally {
+			freeConn();
 		}
 	}
 }
