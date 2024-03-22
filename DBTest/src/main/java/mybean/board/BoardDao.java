@@ -230,6 +230,15 @@ public class BoardDao {
 			freeConn();
 		}
 	}
+	
+	public String useDepth(int depth) {
+		String result = "";
+		for(int i=0; i<depth*3; i++) {//*는 공백을 늘리고싶은만큼 임의로 정해줌
+			result += "&nbsp";
+		}
+		
+		return result;
+	}
 }
 
 

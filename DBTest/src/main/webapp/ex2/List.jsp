@@ -85,9 +85,11 @@
 				
 									BoardDto dto = (BoardDto)list.get(i);
 						%>
-						
+						<tr>
+							
 							<td><%=dto.getB_num()%></td>
-							<td><a href="Read.jsp?b_num=<%=dto.getB_num()%>"><%=dto.getB_subject()%></a></td>
+							<td><%=dao.useDepth(dto.getDepth())%>
+							<a href="Read.jsp?b_num=<%=dto.getB_num()%>"><%=dto.getB_subject()%></a></td>
 							<td><%=dto.getB_name()%></td>
 							<td><%=dto.getB_regdate()%></td>
 							<td><%=dto.getB_count()%></td>
