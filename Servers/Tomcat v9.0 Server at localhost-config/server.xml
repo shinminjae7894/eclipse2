@@ -174,7 +174,7 @@
       	 <ResourceLink global="jdbc/EmployeeDB" name="jdbc/EmployeeDB" type="javax.sql.DataSource"/>
       </Context>
       
-     <Context docBase="FashionTrend" path="/FashionTrend" reloadable="true" source="org.eclipse.jst.jee.server:FashionTrend"/><Context docBase="BootStrapTest" path="/BootStrapTest" reloadable="true" source="org.eclipse.jst.jee.server:BootStrapTest"/><Context docBase="MVCtest" path="/MVCtest" reloadable="true" source="org.eclipse.jst.jee.server:MVCtest"/></Host>
+     <Context docBase="BootStrapTest" path="/BootStrapTest" reloadable="true" source="org.eclipse.jst.jee.server:BootStrapTest"/><Context docBase="MVCtest" path="/MVCtest" reloadable="true" source="org.eclipse.jst.jee.server:MVCtest"/><Context docBase="FashionTrend" path="/FashionTrend" reloadable="true" source="org.eclipse.jst.jee.server:FashionTrend"/></Host>
     </Engine>
   </Service>
 </Server>
