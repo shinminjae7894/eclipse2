@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import mybean.model.CompleteCommand;
 import mybean.model.ConfirmCommand;
+import mybean.model.FactoryCommand;
 import mybean.model.Icommand;
 import mybean.model.Member;
 import mybean.model.RegisterCommand;
@@ -53,6 +54,8 @@ public class MemberController extends HttpServlet{
 		RequestDispatcher view = req.getRequestDispatcher(url);
 		view.forward(req,resp);
 		*/
+		
+		/*
 		String command = req.getParameter("command");
 		String url = null;
 		Icommand icmd = null;
@@ -68,6 +71,19 @@ public class MemberController extends HttpServlet{
 			//방어 코드
 			icmd = new CompleteCommand();
 		}
+		
+		url = (String)icmd.processCommand(req, resp);
+		RequestDispatcher view = req.getRequestDispatcher(url);
+		view.forward(req,resp);
+		*/
+		
+		String command = req.getParameter("command");
+		String url = null;
+		Icommand icmd = null;
+		
+		FactoryCommand factory = FactoryCommand.newInstance();//객체를 생성하면 안됨 싱글톤으로 만들어야함
+		icmd= factory.createInstance(command);
+		
 		url = (String)icmd.processCommand(req, resp);
 		RequestDispatcher view = req.getRequestDispatcher(url);
 		view.forward(req,resp);

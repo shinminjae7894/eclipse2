@@ -23,7 +23,8 @@
 		<tr>
 	<%
 		if(bookList != null){
-			for(Book b : bookList){
+			for(int cnt=0; cnt<bookList.size(); cnt++){//for(Book b : bookList)
+				Book b = bookList.get(cnt);
 	%>
 		<tr>
 			<td><%=b.getTitle()%></td>
@@ -31,7 +32,9 @@
 			<td><%=b.getPrice()%></td>
 			<td><%=b.getQuantity()%></td>
 			<td>
-				<form action="/MVCtest/book?command=del">
+				<form action="/MVCtest/book">
+					<input type="hidden" name="command" value="<%="del" %>" />
+					<input type="hidden" name="cnt" value="<%=cnt %>" />
 					<input type="submit" value="삭제" />
 				</form>
 			</td>
